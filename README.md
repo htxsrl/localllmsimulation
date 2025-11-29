@@ -72,8 +72,8 @@ certbot --version
 ```bash
 # Clone repository
 cd /var/www
-git clone https://github.com/htxsrl/localllmsimulation.git llm-simulator
-cd llm-simulator
+git clone https://github.com/htxsrl/localllmsimulation.git
+cd localllmsimulation
 
 # Backend setup
 cd backend
@@ -100,9 +100,9 @@ After=network.target
 Type=simple
 User=www-data
 Group=www-data
-WorkingDirectory=/var/www/llm-simulator/backend
-Environment="PATH=/var/www/llm-simulator/backend/.venv/bin"
-ExecStart=/var/www/llm-simulator/backend/.venv/bin/uvicorn src.main:app --host 127.0.0.1 --port 8000 --workers 4
+WorkingDirectory=/var/www/localllmsimulation/backend
+Environment="PATH=/var/www/localllmsimulation/backend/.venv/bin"
+ExecStart=/var/www/localllmsimulation/backend/.venv/bin/uvicorn src.main:app --host 127.0.0.1 --port 8000 --workers 4
 Restart=always
 RestartSec=5
 
@@ -146,7 +146,7 @@ server {
     add_header X-XSS-Protection "1; mode=block" always;
 
     # Frontend static files
-    root /var/www/llm-simulator/frontend/dist;
+    root /var/www/localllmsimulation/frontend/dist;
     index index.html;
 
     # Static files caching
@@ -225,7 +225,7 @@ sudo systemctl status llm-simulator
 sudo journalctl -u llm-simulator -f
 
 # Restart after updates
-cd /var/www/llm-simulator
+cd /var/www/localllmsimulation
 git pull
 cd frontend && npm ci && npm run build
 sudo systemctl restart llm-simulator
