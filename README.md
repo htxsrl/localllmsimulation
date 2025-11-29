@@ -126,7 +126,7 @@ sudo systemctl start llm-simulator
 sudo systemctl status llm-simulator
 ```
 
-### 4. NGINX Configuration
+### 4. NGINX Configuration (HTTP first)
 
 Create `/etc/nginx/sites-available/llmsimulation.ht-x.com`:
 
@@ -134,33 +134,10 @@ Create `/etc/nginx/sites-available/llmsimulation.ht-x.com`:
 server {
     listen 80;
     server_name llmsimulation.ht-x.com;
-    return 301 https://$server_name$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    server_name llmsimulation.ht-x.com;
-
-    # SSL (managed by Certbot)
-    ssl_certificate /etc/letsencrypt/live/llmsimulation.ht-x.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/llmsimulation.ht-x.com/privkey.pem;
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
-
-    # Security headers
-    add_header X-Frame-Options "SAMEORIGIN" always;
-    add_header X-Content-Type-Options "nosniff" always;
-    add_header X-XSS-Protection "1; mode=block" always;
 
     # Frontend static files
     root /var/www/localllmsimulation/frontend/dist;
     index index.html;
-
-    # Static files caching
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$ {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
 
     # API proxy
     location /api/ {
@@ -170,9 +147,6 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-
-        # Cache API responses (optional)
-        proxy_cache_valid 200 5m;
     }
 
     # Health check
@@ -200,18 +174,20 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-### 5. SSL Certificate
+### 5. SSL Certificate (adds HTTPS automatically)
 
 ```bash
-# Install certbot
-sudo apt install certbot python3-certbot-nginx
-
-# Get certificate (before enabling NGINX SSL config)
+# Certbot will modify nginx config automatically
 sudo certbot --nginx -d llmsimulation.ht-x.com
 
-# Auto-renewal is enabled by default
+# Verify auto-renewal
 sudo certbot renew --dry-run
 ```
+
+Certbot will automatically:
+- Obtain SSL certificate
+- Modify nginx config to add HTTPS
+- Add HTTP → HTTPS redirect
 
 ### 6. DNS Configuration
 
