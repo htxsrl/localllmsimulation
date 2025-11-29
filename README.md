@@ -72,7 +72,7 @@ certbot --version
 ```bash
 # Clone repository
 cd /var/www
-git clone <your-repo-url> llm-simulator
+git clone https://github.com/htxsrl/localllmsimulation.git llm-simulator
 cd llm-simulator
 
 # Backend setup
