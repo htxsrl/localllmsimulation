@@ -87,6 +87,13 @@ npm ci
 npm run build
 ```
 
+**Note:** If you ran the commands as root, fix permissions:
+
+```bash
+sudo chown -R www-data:www-data /var/www/localllmsimulation
+sudo chmod -R 755 /var/www/localllmsimulation
+```
+
 ### 3. Systemd Service for Backend
 
 Create `/etc/systemd/system/llm-simulator.service`:
