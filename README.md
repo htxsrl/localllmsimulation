@@ -1,8 +1,8 @@
-# LLM Performance Simulator
+# Local LLM Performance Simulator
 
 Web simulator to estimate LLM inference performance on different hardware.
 
-**Live**: [llm.ht-x.com](https://llm.ht-x.com)
+**Live**: [llmsimulation.ht-x.com](https://llmsimulation.ht-x.com)
 
 ## Features
 
@@ -95,22 +95,22 @@ sudo systemctl status llm-simulator
 
 ### 4. NGINX Configuration
 
-Create `/etc/nginx/sites-available/llm.ht-x.com`:
+Create `/etc/nginx/sites-available/llmsimulation.ht-x.com`:
 
 ```nginx
 server {
     listen 80;
-    server_name llm.ht-x.com;
+    server_name llmsimulation.ht-x.com;
     return 301 https://$server_name$request_uri;
 }
 
 server {
     listen 443 ssl http2;
-    server_name llm.ht-x.com;
+    server_name llmsimulation.ht-x.com;
 
     # SSL (managed by Certbot)
-    ssl_certificate /etc/letsencrypt/live/llm.ht-x.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/llm.ht-x.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/llmsimulation.ht-x.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/llmsimulation.ht-x.com/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
@@ -162,7 +162,7 @@ server {
 Enable site:
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/llm.ht-x.com /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/llmsimulation.ht-x.com /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 ```
@@ -174,7 +174,7 @@ sudo systemctl reload nginx
 sudo apt install certbot python3-certbot-nginx
 
 # Get certificate (before enabling NGINX SSL config)
-sudo certbot --nginx -d llm.ht-x.com
+sudo certbot --nginx -d llmsimulation.ht-x.com
 
 # Auto-renewal is enabled by default
 sudo certbot renew --dry-run
@@ -186,7 +186,7 @@ Add an A record in your DNS provider:
 
 ```
 Type: A
-Name: llm
+Name: llmsimulation
 Value: <your-server-ip>
 TTL: 3600
 ```
