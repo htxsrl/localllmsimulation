@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+.venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build
+frontend/dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Data (keep structure, ignore large files)
+*.db
+!backend/data/.gitkeep
+*.pkl
+
+# Docker
+docker-compose.override.yml
+
+# Logs
+*.log
+
+# Unrelated projects
+yt-subtitles-analyzer/
+
+# Private
+server.txt
+
+# Claude Code
+.claude/
+
+# Project spec (private)
+SPEC.md
