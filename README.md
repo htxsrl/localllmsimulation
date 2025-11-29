@@ -35,11 +35,37 @@ Open http://localhost:3000
 
 ### 1. Server Requirements
 
-- Linux (Ubuntu 22.04+ recommended)
+- Linux (Ubuntu 24.04 LTS recommended)
 - Python 3.12+
 - Node.js 20+
 - NGINX
 - Certbot (for SSL)
+
+```bash
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Python 3.12 (included in Ubuntu 24.04)
+sudo apt install python3.12-venv -y
+
+# Node.js 20 (via NodeSource)
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install nodejs -y
+
+# NGINX
+sudo apt install nginx -y
+sudo systemctl enable nginx
+sudo systemctl start nginx
+
+# Certbot
+sudo apt install certbot python3-certbot-nginx -y
+
+# Verify installations
+python3 --version
+node --version
+nginx -v
+certbot --version
+```
 
 ### 2. Clone and Setup
 
