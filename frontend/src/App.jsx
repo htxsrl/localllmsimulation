@@ -134,19 +134,19 @@ function App() {
                 setSelectedHardware(String(defaultHw.id));
             }
 
-            // Find Llama 3.1 8B or similar for hardware mode
-            const llama = models.find(m => m.family === 'Llama 3.1' && m.size_b === 8)
-                || models.find(m => m.family === 'Llama 3.1')
-                || models.find(m => m.family.includes('Llama'))
+            // Find Mistral Large 123B or similar for hardware mode
+            const defaultModel = models.find(m => m.family === 'Mistral Large' && m.size_b === 123)
+                || models.find(m => m.family === 'Mistral Large')
+                || models.find(m => m.family.includes('Mistral'))
                 || models[0];
 
-            if (llama) {
-                setSelectedFamily(llama.family);
-                setSelectedSize(String(llama.id));
-                const detail = await getModelDetail(llama.id);
+            if (defaultModel) {
+                setSelectedFamily(defaultModel.family);
+                setSelectedSize(String(defaultModel.id));
+                const detail = await getModelDetail(defaultModel.id);
                 setQuantizations(detail.quantizations);
-                // Select Q4_K_M or first quantization
-                const defaultQuant = detail.quantizations.find(q => q.quant_type === 'Q4_K_M')
+                // Select Q2_K or first quantization
+                const defaultQuant = detail.quantizations.find(q => q.quant_type === 'Q2_K')
                     || detail.quantizations[0];
                 if (defaultQuant) {
                     setSelectedQuant(String(defaultQuant.id));
