@@ -134,9 +134,9 @@ function App() {
                 setSelectedHardware(String(defaultHw.id));
             }
 
-            // Find Mistral Large 123B or similar for hardware mode
-            const defaultModel = models.find(m => m.family === 'Mistral Large' && m.size_b === 123)
-                || models.find(m => m.family === 'Mistral Large')
+            // Find Mistral Large 2 123B or similar for hardware mode
+            const defaultModel = models.find(m => m.family === 'Mistral' && m.size_b === 123)
+                || models.find(m => m.size_b === 123)
                 || models.find(m => m.family.includes('Mistral'))
                 || models[0];
 
