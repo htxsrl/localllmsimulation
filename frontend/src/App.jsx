@@ -135,9 +135,8 @@ function App() {
             }
 
             // Find Mistral Large 2 123B or similar for hardware mode
-            const defaultModel = models.find(m => m.family === 'Mistral' && m.size_b === 123)
-                || models.find(m => m.size_b === 123)
-                || models.find(m => m.family.includes('Mistral'))
+            const defaultModel = models.find(m => m.family === 'Mistral' && Math.round(m.size_b) === 123)
+                || models.find(m => Math.round(m.size_b) === 123)
                 || models[0];
 
             if (defaultModel) {
